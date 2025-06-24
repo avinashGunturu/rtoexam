@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Your Contribution</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .content p {
+            margin: 0 0 10px;
+        }
+        .content .details {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .content .details p {
+            margin: 5px 0;
+        }
+        .footer {
+            text-align: center;
+            background-color: #f9f9f9;
+            color: #888;
+            font-size: 12px;
+            padding: 10px 20px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Thank You for Your Contribution!</h1>
+        </div>
+        <div class="content">
+            <p>Dear {{name}},</p>
+            <p>We sincerely appreciate your generous contribution to our work. Your support means a lot to us and helps us continue to deliver the best service possible.</p>
+            <div class="details">
+                <p><strong>Transaction Details:</strong></p>
+                <p><strong>Email ID:</strong> {{email}}</p>
+                <p><strong>Mobile Number:</strong> {{mobile}}</p>
+                <p><strong>Amount Contributed:</strong> ₹{{amount}}</p>
+                <p><strong>Transaction ID:</strong> {{id}}</p>
+            </div>
+            <p>If you have any questions or need further assistance, feel free to reach out to us at [Your Contact Information].</p>
+            <p>Once again, thank you for your kind support.</p>
+            <p>Best regards,</p>
+            <p>RTO Driving test</p>
+        </div>
+        <div class="footer">
+            <p>&copy; RTO Driving test . All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

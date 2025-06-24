@@ -1,0 +1,61 @@
+Client-Side Decryption
+
+const SECRET_KEY = 'your-secret-key-here'; // Must match the server's secret key
+const IV_HEX = '...'; // IV received from the server
+const ENCRYPTED_DATA = '...'; // Encrypted data received from the server
+
+const decryptedData = decryptData(ENCRYPTED_DATA, SECRET_KEY, IV_HEX);
+console.log('Decrypted:', decryptedData);
+
+
+
+========================== crypto decryptData in frontEnd =========================
+
+import React from 'react';
+import CryptoJS from 'crypto-js';
+
+export function App(props) {
+
+const decryptData = (encryptedData, secretKey, ivHex) => {
+    try {
+        // Convert the hex IV to a CryptoJS WordArray
+        const iv = CryptoJS.enc.Hex.parse(ivHex);
+
+        // Derive the key using SHA-256 hashing
+        const key = CryptoJS.SHA256(secretKey);
+
+        // Decrypt the data
+        const decrypted = CryptoJS.AES.decrypt(
+            { ciphertext: CryptoJS.enc.Hex.parse(encryptedData) }, // Encrypted data in hex
+            key, // Derived key
+            { iv } // Initialization vector
+        );
+
+        // Convert the decrypted data to a UTF-8 string
+        const decryptedText = decrypted.toString(CryptoJS.enc.Utf8);
+
+        // Parse the decrypted string back to an object
+        return JSON.parse(decryptedText);
+    } catch (error) {
+        console.error('Decryption failed:', error);
+        return null; // Handle decryption errors gracefully
+    }
+};
+
+// Example usage
+const SECRET_KEY = 'iamavinash'; // Must match the key used for encryption
+const IV_HEX = "4cffd6e7353d771b14067c3bb018f1ba"; // Must match the IV used for encryption
+const ENCRYPTED_DATA = "7243e57249f3b607828db70e856bb48634194300c65890f6986c386845f92ee6930cd7049cb99365a03f47eee2442aa7e5636326325f242bace0b34e5836dbf301a68dbf4618a0c9e8a1af8d3c103358d5deafff2ac3d37e21146aeb7bf3343d863416aca2384d145b8be9e65a454ff13c39158d087dbdb250dd76ab50e5a71c780b6d53bed171ba7482c8c42577fc0b2cc66e112a630b639737b1b7a355e5d6957dce9f077fc4d7d404eaaf1d1beb30054d24f0fe6461ca1cb777f5eab1e93187541e22531c0196b0baaa420e1c344435b2d311a7f39b2e789a49cc33f51646dbbc0d4233961ab99c9713ea2f7fc9e78e8d984bf0ef9ae30c4f7674186da4aeeba2fbc53cea080471039e3a59a69a7320e15fb8fc0f982747eb66a68f1c959c3dcd85feb8fcf7c892ababad5bc606fe5ff9389438d6f52b04643d0502a8d1124c92b788aa4f23aef0fd143e8c325da8ee59eb8839feb38f1274cc7322a692f1b0c9c1ce8afaa3130c3a0a9f9fafff1ed81699e9efe8dcdbdaae6ff794cdef2c09a22b611f9e388fc747f5ab8dfc7463495d544081bd9aada85ffb97a5408002b9159003600ea2586974d6e7ffa027235ca2c9b9171a9d513ba4d2ca5028e47dae39a7ad3a2d6ea3925ebfe2eb7d194cb0fbd717a9be01d965b9f609d3fb203326adcf44364d168c1c2999de94736b73470ac7a6bcdfa8c37a256d0633ce568c927adc30346ffdf06892daf72843a99664a6abcc697e4d03f5188dc8c902854483c2ca8d94b5a0f7dd63d597b37248c3a03f5e08a0db88ec7254c6632db872b278de164de8410b38a13d0992561eaf57e167e7fe23a2c0e52c1a7e1485f0d3f76bf5f80fc7131effd15a77c7ef18022afe7179d913e510c7e44033605bf3313d318f89b0d30b091fffcdbd46e328162648a0017024f82e73fd24afbc71556e3e4ced1d9ab229000d9812f72e52a81d05d4c92e35d5ec75bcf3af812b16b9bad0ce3e5aa826bea3874f05ed9b9c16f5b09d745c6015d76f0affc88d1ecaa8f589ab06405c39778b845d208f7817ac631b50fcd416eafb395c7a4c52272debb7994f42afa7f7b737e4f852dbf0b1506bc79d64b946f65acc6880a27364960fc9a5318d38ec63159463320c43483163fd18d133beb50905289407c072146e809b1f0200b9579dd97ced0c897b9ec2224316230ffeb7947f9bd27bdf15f24f02c5a9b1a8c77f33a3ad1bdf2baee9d71c52d9ceb7cd75a703de72f19b9c3e7fa00934e94f5ca39444e47950ae64019c3b714d982eb67f98b03947d9deb16e5cc7b2c4312ba009ac3e1bd06dba827e514886353d17bc52a159aa054a0d66344ed57df542e69b3670772b9619e23449c0f15fc0aef65a041138be3af1aaa7e15eafb90ff686c6c825a406c05e8fdea39ffd7dea52d27056e5c02c4a545cc7bf0f23e24209056ae323c4e76bf19c8c036ae1393bae891497f438517a83aad38557ed77cfd240cc68538160ec2740a56cab2824b23a147ca2e54275d3766cbe5332ed19b1b75fe865b4d28e772d8b12e7fcb4bd45005371ac5f21f08a9ff9e56576641ed9ba4754d24dd6634b21ff878c185d41d78596570e15ef8b6d51b0f1539258b4eb62f83d388018c839679f2120207d85684f6fcb8810c2b86d154782e20b227e4ae229e993eade68dd731b3c32ab31e34369312fd26f57f795d429fcc68dacb9dc105ad6e59043a18788d07a5049fcbe52351c0e48a53667085f5d45f86204fbe773539c2513fbcb54162f3560e141534589d8349d23e63bf1f996a0b172e2cd7763c483d05fa2046ba5be3f64c07820a40d8bad15f996638a7d6bf4a6c9ab12e0ed44b6b69c77c242a413f0da6c7e2ac7dfef0e6b60091afadae8e3e4b3f2df6eb04ecd738b496b2f3bbe65f2f40a0da8b7b82043fc4b5c757a7fc357f201cf35effbbe17b0c99f5c602376a95767ed0156eee63ce927e2cb070bf89dde0f5eaf38d79568e22de6711038f9c99ac40230"
+
+const decryptedData = decryptData(ENCRYPTED_DATA, SECRET_KEY, IV_HEX);
+console.log(decryptedData); // Decrypted data
+
+  return (
+    <div className='App'>
+      <h1>Hello React.</h1>
+      <h2>Start editing to see some magic happen!</h2>
+    </div>
+  );
+}
+
+========================== crypto decryptData in frontEnd =========================
